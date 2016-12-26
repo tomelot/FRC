@@ -17,6 +17,7 @@ public class miki extends LinearOpMode {
     private Servo IntoWheels;
     long start_time;
     long time_check1=0;
+    boolean toggle1 = false;
     boolean checkshoot=false;
     boolean checkshootinglow=false;
     boolean checkshootinghigh=false;
@@ -47,8 +48,17 @@ public class miki extends LinearOpMode {
 
     }
     public void drive(){
-        motorLeft.setPower(-(gamepad1.left_stick_y-gamepad1.right_stick_x));
-        motorRight.setPower(-(gamepad1.left_stick_y+gamepad1.right_stick_x));
+        if (gamepad1.y==true) {
+            if(toggle1==false) {
+                motorLeft.setPower(-(gamepad1.left_stick_y-gamepad1.right_stick_x));
+                motorRight.setPower(-(gamepad1.left_stick_y+gamepad1.right_stick_x));
+                toggle1=true;
+            }else {
+                motorLeft.setPower(-(gamepad1.left_stick_y-gamepad1.left_stick_x));
+                motorRight.setPower(-(gamepad1.left_stick_y+gamepad1.left_stick_x));
+                toggle1=false;
+            }
+        }
     }
     public void shoot(){
         if(gamepad1.a==true) {
