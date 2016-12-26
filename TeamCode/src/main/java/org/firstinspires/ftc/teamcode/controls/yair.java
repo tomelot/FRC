@@ -24,8 +24,6 @@ public class yair extends LinearOpMode {
     boolean toggle_Mode=false;
     boolean toggle1=false;
     boolean first=false;
-    boolean first2=false;
-
     @Override
 
     public void runOpMode() throws InterruptedException {
@@ -78,22 +76,20 @@ public class yair extends LinearOpMode {
             first=true;
         }
         if(gamepad1.left_trigger==0) {
-            if ((start_time - time_check2) <=500) {
-                if((start_time-time_check3)>=500 &&time_check3>0){
-                    MotorWheelLeft.setPower(0);
-                    MotorWheelRight.setPower(0);
-                    toggle_Mode = false;
-                    time_check3=0;
-                    first=false;
-                }
-              else {
-                    toggle_Mode = true;
-                    MotorWheelLeft.setPower(0.27);
-                    MotorWheelRight.setPower(0.27);
-                    first=false;
-                }
+            if (toggle1 == true) {
+                MotorWheelLeft.setPower(0);
+                MotorWheelRight.setPower(0);
+                toggle_Mode = false;
+                time_check3 = 0;
+                first = false;
+            } else {
+                toggle_Mode = true;
+                MotorWheelLeft.setPower(0.27);
+                MotorWheelRight.setPower(0.27);
+                first = false;
             }
         }
+
     }
     public void shootpower() {
 
