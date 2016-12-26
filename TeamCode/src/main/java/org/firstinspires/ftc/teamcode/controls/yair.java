@@ -76,17 +76,21 @@ public class yair extends LinearOpMode {
             first=true;
         }
         if(gamepad1.left_trigger==0) {
+            if((start_time-time_check2)<=500&&time_check2>0)
             if (toggle1 == true) {
                 MotorWheelLeft.setPower(0);
                 MotorWheelRight.setPower(0);
                 toggle_Mode = false;
-                time_check3 = 0;
+                toggle1=false;
                 first = false;
+                time_check2=0;
             } else {
                 toggle_Mode = true;
                 MotorWheelLeft.setPower(0.27);
                 MotorWheelRight.setPower(0.27);
                 first = false;
+                toggle1=true;
+                time_check2=0;
             }
         }
 
