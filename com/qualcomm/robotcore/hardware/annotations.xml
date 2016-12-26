@@ -1,0 +1,5 @@
+<root>
+  <item name='com.qualcomm.robotcore.hardware.Gamepad right_bumper'>
+    <annotation name='java.lang.annotation.Deprecated' />
+  </item>
+</root>
