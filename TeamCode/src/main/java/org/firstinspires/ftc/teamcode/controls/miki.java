@@ -50,14 +50,19 @@ public class miki extends LinearOpMode {
     public void drive(){
         if (gamepad1.y==true) {
             if(toggle1==false) {
-                motorLeft.setPower(-(gamepad1.left_stick_y-gamepad1.right_stick_x));
-                motorRight.setPower(-(gamepad1.left_stick_y+gamepad1.right_stick_x));
+
                 toggle1=true;
             }else {
-                motorLeft.setPower(-(gamepad1.left_stick_y-gamepad1.left_stick_x));
-                motorRight.setPower(-(gamepad1.left_stick_y+gamepad1.left_stick_x));
                 toggle1=false;
             }
+        }
+        if(toggle1==false){
+            motorLeft.setPower(-(gamepad1.left_stick_y-gamepad1.right_stick_x));
+            motorRight.setPower(-(gamepad1.left_stick_y+gamepad1.right_stick_x));
+        }
+        else {
+            motorLeft.setPower(-(gamepad1.left_stick_y-gamepad1.left_stick_x));
+            motorRight.setPower(-(gamepad1.left_stick_y+gamepad1.left_stick_x));
         }
     }
     public void shoot(){
