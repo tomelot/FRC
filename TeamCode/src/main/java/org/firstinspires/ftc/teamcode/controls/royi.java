@@ -47,8 +47,8 @@ public class royi extends LinearOpMode {
 
     } 
     public void drive(){
-        motorLeft.setPower(gamepad1.left_stick_y+gamepad1.right_stick_x);
-        motorRight.setPower(gamepad1.left_stick_y-gamepad1.right_stick_x);
+        motorLeft.setPower(-gamepad1.left_stick_y+gamepad1.right_stick_x);
+        motorRight.setPower(-gamepad1.left_stick_y-gamepad1.right_stick_x);
     }
     public void shoot(){
         if(gamepad1.a==true) {

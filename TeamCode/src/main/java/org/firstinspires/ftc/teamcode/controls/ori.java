@@ -21,11 +21,13 @@ public class ori extends LinearOpMode {
     private Servo IntoWheels;
     long start_time;
     long time_check1=0;
+    long time_check2=0;
     boolean checkshoot=false;
     boolean checkshootinglow=false;
     boolean checkshootinghigh=false;
     boolean toggle1=false;
     boolean toggle2=false;
+    boolean first=false;
 
     @Override
 
@@ -37,7 +39,7 @@ public class ori extends LinearOpMode {
         MotorWheelRight=hardwareMap.dcMotor.get("motorwheelright");
         MotorWheelLeft=hardwareMap.dcMotor.get("motorwheelleft");
         IntoWheels=hardwareMap.servo.get("intowheels");
-        motorLeft.setDirection(DcMotor.Direction.REVERSE);
+        motorRight.setDirection(DcMotor.Direction.REVERSE);
         IntoWheels.setPosition(0.8);
         waitForStart();
         start_time = System.currentTimeMillis();
@@ -73,18 +75,31 @@ public class ori extends LinearOpMode {
 
     }
     public void shootpowerlow(){
+        int a =0;
             if (gamepad1.x==true) {
-                if(toggle1==false) {
-                    MotorWheelLeft.setPower(0.27);
-                    MotorWheelRight.setPower(0.27);
-                    toggle1=true;
-                }else {
-                    MotorWheelLeft.setPower(0);
-                    MotorWheelRight.setPower(0);
-                    toggle1=false;
-                }
+                if(time_check2>0) {
+                    if ((start_time - time_check2) >= 350) {
 
+                        time_check2 = start_time;
+                        toggle1 = !toggle1;
+                    }
+                }
+                else{
+                    time_check2 = start_time;
+                    toggle1 = !toggle1;
+                }
             }
+                    if (toggle1 == false) {
+                        MotorWheelLeft.setPower(0.27);
+                        MotorWheelRight.setPower(0.27);
+
+                    } else {
+                        MotorWheelLeft.setPower(0);
+                        MotorWheelRight.setPower(0);
+
+                    }
+
+
 
 
         telemetry.addData("speed",motorLeft.getPower());
