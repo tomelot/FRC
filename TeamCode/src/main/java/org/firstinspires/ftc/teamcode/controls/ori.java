@@ -75,7 +75,6 @@ public class ori extends LinearOpMode {
 
     }
     public void shootpowerlow(){
-        int a =0;
             if (gamepad1.x==true) {
                 if(time_check2>0) {
                     if ((start_time - time_check2) >= 350) {
