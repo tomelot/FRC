@@ -54,10 +54,12 @@ public class Auto_45 extends LinearOpMode {
         motorLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         motorRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         motorRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        motorLeft.setTargetPosition((cm/32*1440)*FOB);
-        motorRight.setTargetPosition((cm/32*1440)*FOB);
         motorLeft.setPower(FOB);
         motorRight.setPower(FOB);
+        if (motorLeft.getCurrentPosition()==(cm/32*1440)*FOB && motorRight.getCurrentPosition()==(cm/32*1440)*FOB){
+            motorLeft.setPower(0);
+            motorRight.setPower(0);
+        }
     }
 
     public void turn(int deg) {
