@@ -30,13 +30,16 @@ public class Auto_45 extends LinearOpMode {
         IntoWheels = hardwareMap.servo.get("intowheels");
         motorLeft.setDirection(DcMotor.Direction.REVERSE);
         IntoWheels.setPosition(0.8);
+        commit();
     }
 
     public void commit() {
         waitForStart();
-        shoot(2, 1);
+        telemetry.addData("encoder",motorLeft.getCurrentPosition());
+        telemetry.update();
+        //shoot(2, 1);
         drive(100, 1);
-        turn(90);
+        //turn(90);
     }
     public boolean shoot(int balls,double speed){
         MotorWheelLeft.setPower(speed);
