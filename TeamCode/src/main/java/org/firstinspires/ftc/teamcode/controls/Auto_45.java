@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.controls;
 
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -8,19 +9,13 @@ import com.qualcomm.robotcore.hardware.Servo;
 /**
  * Created by Le Nayad on 12/25/2016.
  */
-@TeleOp(name="control_miki")
+@Autonomous(name="Auto_1")
 public class Auto_45 extends LinearOpMode {
     private DcMotor motorLeft;
     private DcMotor motorRight;
     private  DcMotor MotorWheelRight;
     private  DcMotor MotorWheelLeft;
     private Servo IntoWheels;
-    long start_time;
-    long time_check1=0;
-    boolean toggle1 = false;
-    boolean checkshoot=false;
-    boolean checkshootinglow=false;
-    boolean checkshootinghigh=false;
 
     @Override
 
@@ -29,89 +24,35 @@ public class Auto_45 extends LinearOpMode {
 
         motorLeft= hardwareMap.dcMotor.get("motorleft");
         motorRight=hardwareMap.dcMotor.get("motorright");
+        motorRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        motorRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         MotorWheelRight=hardwareMap.dcMotor.get("motorwheelright");
         MotorWheelLeft=hardwareMap.dcMotor.get("motorwheelleft");
         IntoWheels=hardwareMap.servo.get("intowheels");
         motorLeft.setDirection(DcMotor.Direction.REVERSE);
         IntoWheels.setPosition(0.8);
         waitForStart();
-        start_time = System.currentTimeMillis();
-        while(opModeIsActive()) {
-            start_time = System.currentTimeMillis();
-            drive();
-            shootpowerhigh();
-            shootpowerlow();
-            shoot();
-            telemetry.addData("speed",MotorWheelLeft.getCurrentPosition());
-            telemetry.update();
-        }
 
     }
-    public void drive(){
-        if (gamepad1.y==true) {
-            if(toggle1==false) {
-
-                toggle1=true;
-            }else {
-                toggle1=false;
-            }
-        }
-        if(toggle1==false){
-            motorLeft.setPower(-(gamepad1.left_stick_y-gamepad1.right_stick_x));
-            motorRight.setPower(-(gamepad1.left_stick_y+gamepad1.right_stick_x));
-        }
-        else {
-            motorLeft.setPower(-(gamepad1.left_stick_y-gamepad1.left_stick_x));
-            motorRight.setPower(-(gamepad1.left_stick_y+gamepad1.left_stick_x));
-        }
+    public boolean shoot(int balls,double speed){
+        MotorWheelLeft.setPower(speed);
+        MotorWheelRight.setPower(speed);
+        sleep(3000);
+        IntoWheels.setPosition(0.2);
+        sleep(1500*balls);
+        IntoWheels.setPosition(0.8);
+        MotorWheelLeft.setPower(0);
+        MotorWheelRight.setPower(0);
+        return true;
     }
-    public void shoot(){
-        if(gamepad1.a==true) {
-            if (checkshoot == false) {
-                checkshoot = true;
-                time_check1 = start_time +2000;
-                IntoWheels.setPosition(0.2);
-            }
-        }
-        if(time_check1<=start_time&&time_check1>0) {
-            time_check1=0;
-            IntoWheels.setPosition(0.8);
-            checkshoot=false;
-
-        }
-        telemetry.addData("servo",IntoWheels.getPosition());
-
-    }
-    public void shootpowerlow(){
-        if(checkshootinghigh==false) {
-            if (gamepad1.left_trigger > 0) {
-                MotorWheelLeft.setPower(0.27);
-                MotorWheelRight.setPower(0.27);
-                checkshootinglow=true;
-
-            } else {
-                MotorWheelLeft.setPower(0);
-                MotorWheelRight.setPower(0);
-                checkshootinglow=false;
-
-            }
-
-        }
-    }
-    public void shootpowerhigh() {
-        if (checkshootinglow == false) {
-            if (gamepad1.right_trigger > 0) {
-                MotorWheelLeft.setPower(0.35);
-                MotorWheelRight.setPower(0.35);
-                checkshootinghigh=true;
-
-            } else {
-                MotorWheelLeft.setPower(0);
-                MotorWheelRight.setPower(0);
-                checkshootinghigh=false;
-
-            }
-        }
-
+    public void drive(int cm,int FOB){
+        motorRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        motorLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        motorRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        motorRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        motorLeft.setTargetPosition((cm/32*1440)*FOB);
+        motorRight.setTargetPosition((cm/32*1440)*FOB);
+        motorLeft.setPower(FOB);
+        motorRight.setPower(FOB);
     }
 }
