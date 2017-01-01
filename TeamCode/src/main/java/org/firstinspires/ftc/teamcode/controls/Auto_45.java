@@ -56,7 +56,7 @@ public class Auto_45 extends LinearOpMode {
         motorRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         motorLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         motorRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        motorRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        motorLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
        while (motorLeft.getCurrentPosition()!=(cm/32*1440)*FOB && motorRight.getCurrentPosition()!=(cm/32*1440)*FOB){
            motorLeft.setPower(FOB);
            motorRight.setPower(FOB);
