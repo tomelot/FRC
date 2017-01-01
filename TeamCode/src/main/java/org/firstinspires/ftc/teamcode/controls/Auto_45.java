@@ -9,6 +9,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 /**
  * Created by Le Nayad on 12/25/2016.
  */
+
 @Autonomous(name="Auto_1")
 public class Auto_45 extends LinearOpMode {
     private DcMotor motorLeft;
@@ -19,19 +20,18 @@ public class Auto_45 extends LinearOpMode {
 
     @Override
 
-    public void runOpMode() throws InterruptedException {
+    public void runOpMode() {
 
 
         motorLeft= hardwareMap.dcMotor.get("motorleft");
         motorRight=hardwareMap.dcMotor.get("motorright");
         motorRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        motorRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        motorLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         MotorWheelRight=hardwareMap.dcMotor.get("motorwheelright");
         MotorWheelLeft=hardwareMap.dcMotor.get("motorwheelleft");
         IntoWheels=hardwareMap.servo.get("intowheels");
         motorLeft.setDirection(DcMotor.Direction.REVERSE);
         IntoWheels.setPosition(0.8);
-        waitForStart();
 
     }
     public boolean shoot(int balls,double speed){
@@ -55,4 +55,5 @@ public class Auto_45 extends LinearOpMode {
         motorLeft.setPower(FOB);
         motorRight.setPower(FOB);
     }
+
 }
