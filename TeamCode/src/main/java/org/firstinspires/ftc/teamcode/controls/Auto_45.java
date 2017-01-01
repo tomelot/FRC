@@ -21,22 +21,22 @@ public class Auto_45 extends LinearOpMode {
     @Override
 
     public void runOpMode() throws InterruptedException {
-
-
-        motorLeft= hardwareMap.dcMotor.get("motorleft");
-        motorRight=hardwareMap.dcMotor.get("motorright");
+        motorLeft = hardwareMap.dcMotor.get("motorleft");
+        motorRight = hardwareMap.dcMotor.get("motorright");
         motorRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         motorLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        MotorWheelRight=hardwareMap.dcMotor.get("motorwheelright");
-        MotorWheelLeft=hardwareMap.dcMotor.get("motorwheelleft");
-        IntoWheels=hardwareMap.servo.get("intowheels");
+        MotorWheelRight = hardwareMap.dcMotor.get("motorwheelright");
+        MotorWheelLeft = hardwareMap.dcMotor.get("motorwheelleft");
+        IntoWheels = hardwareMap.servo.get("intowheels");
         motorLeft.setDirection(DcMotor.Direction.REVERSE);
         IntoWheels.setPosition(0.8);
-        waitForStart();
-        shoot(2,1);
-        drive(100,1);
-        turn(90);
+    }
 
+    public void commit() {
+        waitForStart();
+        shoot(2, 1);
+        drive(100, 1);
+        turn(90);
     }
     public boolean shoot(int balls,double speed){
         MotorWheelLeft.setPower(speed);
