@@ -20,7 +20,7 @@ public class Auto_45 extends LinearOpMode {
     double degcm;
     @Override
 
-    public void runOpMode() {
+    public void runOpMode() throws InterruptedException {
 
 
         motorLeft= hardwareMap.dcMotor.get("motorleft");
@@ -32,6 +32,10 @@ public class Auto_45 extends LinearOpMode {
         IntoWheels=hardwareMap.servo.get("intowheels");
         motorLeft.setDirection(DcMotor.Direction.REVERSE);
         IntoWheels.setPosition(0.8);
+        waitForStart();
+        shoot(2,1);
+        drive(100,1);
+        turn(90);
 
     }
     public boolean shoot(int balls,double speed){
