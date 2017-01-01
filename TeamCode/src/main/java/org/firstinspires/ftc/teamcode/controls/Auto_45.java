@@ -61,8 +61,8 @@ public class Auto_45 extends LinearOpMode {
            motorLeft.setPower(FOB);
            motorRight.setPower(FOB);
         }
-        motorLeft.setPower(0);
-        motorRight.setPower(0);
+       motorLeft.setPower(0);
+       motorRight.setPower(0);
     }
 
     public void turn(int deg) {
@@ -72,16 +72,20 @@ public class Auto_45 extends LinearOpMode {
         motorRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         motorRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         if (deg < 0) {
-            motorLeft.setTargetPosition((deg / 32 * 1440));
-            motorRight.setTargetPosition(-(deg / 32 * 1440));
+            while (motorLeft.getCurrentPosition()!=(deg / 32 * 1440) && motorRight.getCurrentPosition()!=(deg / 32 * 1440)){
+                motorLeft.setPower(1);
+                motorRight.setPower(-1);
+            }
+            motorLeft.setPower(0);
+            motorRight.setPower(0);
         } else if (deg > 0) {
-            motorLeft.setTargetPosition((-deg / 32 * 1440));
-            motorRight.setTargetPosition((deg / 32 * 1440));
-        } else {
-
+            while (motorLeft.getCurrentPosition() != (deg / 32 * 1440) && motorRight.getCurrentPosition() != (deg / 32 * 1440)) {
+                motorLeft.setPower(-1);
+                motorRight.setPower(1);
+            }
+            motorLeft.setPower(0);
+            motorRight.setPower(0);
         }
-        motorLeft.setPower(1);
-        motorRight.setPower(1);
     }
 
 }
