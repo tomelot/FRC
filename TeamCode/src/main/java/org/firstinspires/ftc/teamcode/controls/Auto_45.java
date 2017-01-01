@@ -21,22 +21,22 @@ public class Auto_45 extends LinearOpMode {
     @Override
 
     public void runOpMode() throws InterruptedException {
-
-
-        motorLeft= hardwareMap.dcMotor.get("motorleft");
-        motorRight=hardwareMap.dcMotor.get("motorright");
+        motorLeft = hardwareMap.dcMotor.get("motorleft");
+        motorRight = hardwareMap.dcMotor.get("motorright");
         motorRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         motorLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        MotorWheelRight=hardwareMap.dcMotor.get("motorwheelright");
-        MotorWheelLeft=hardwareMap.dcMotor.get("motorwheelleft");
-        IntoWheels=hardwareMap.servo.get("intowheels");
+        MotorWheelRight = hardwareMap.dcMotor.get("motorwheelright");
+        MotorWheelLeft = hardwareMap.dcMotor.get("motorwheelleft");
+        IntoWheels = hardwareMap.servo.get("intowheels");
         motorLeft.setDirection(DcMotor.Direction.REVERSE);
         IntoWheels.setPosition(0.8);
-        waitForStart();
-        shoot(2,1);
-        drive(100,1);
-        turn(90);
+    }
 
+    public void commit() {
+        waitForStart();
+        shoot(2, 1);
+        drive(100, 1);
+        turn(90);
     }
     public boolean shoot(int balls,double speed){
         MotorWheelLeft.setPower(speed);
@@ -63,17 +63,17 @@ public class Auto_45 extends LinearOpMode {
     }
 
     public void turn(int deg) {
-        int idk = deg / 4;
+        deg = deg / 4;
         motorRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         motorLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         motorRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         motorRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        if (idk < 0) {
-            motorLeft.setTargetPosition((idk / 32 * 1440));
-            motorRight.setTargetPosition(-(idk / 32 * 1440));
-        } else if (idk > 0) {
-            motorLeft.setTargetPosition((-idk / 32 * 1440));
-            motorRight.setTargetPosition((idk / 32 * 1440));
+        if (deg < 0) {
+            motorLeft.setTargetPosition((deg / 32 * 1440));
+            motorRight.setTargetPosition(-(deg / 32 * 1440));
+        } else if (deg > 0) {
+            motorLeft.setTargetPosition((-deg / 32 * 1440));
+            motorRight.setTargetPosition((deg / 32 * 1440));
         } else {
 
         }
