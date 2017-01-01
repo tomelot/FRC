@@ -33,6 +33,13 @@ public class Auto_45 extends LinearOpMode {
         commit();
     }
 
+    public  void Auto1() {
+        drive(155, 1);
+        drive(20, -1);
+        turn(130);
+        drive(500, 1);
+    }
+
     public void commit() {
         waitForStart();
         telemetry.addData("encoder",motorLeft.getCurrentPosition());
