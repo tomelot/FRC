@@ -17,7 +17,7 @@ public class Auto_45 extends LinearOpMode {
     private  DcMotor MotorWheelRight;
     private  DcMotor MotorWheelLeft;
     private Servo IntoWheels;
-
+    double degcm;
     @Override
 
     public void runOpMode() {
@@ -54,6 +54,25 @@ public class Auto_45 extends LinearOpMode {
         motorRight.setTargetPosition((cm/32*1440)*FOB);
         motorLeft.setPower(FOB);
         motorRight.setPower(FOB);
+    }
+
+    public void turn(int deg) {
+        int idk = deg / 4;
+        motorRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        motorLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        motorRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        motorRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        if (idk < 0) {
+            motorLeft.setTargetPosition((idk / 32 * 1440));
+            motorRight.setTargetPosition(-(idk / 32 * 1440));
+        } else if (idk > 0) {
+            motorLeft.setTargetPosition((-idk / 32 * 1440));
+            motorRight.setTargetPosition((idk / 32 * 1440));
+        } else {
+
+        }
+        motorLeft.setPower(1);
+        motorRight.setPower(1);
     }
 
 }
