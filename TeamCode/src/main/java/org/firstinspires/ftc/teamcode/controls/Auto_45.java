@@ -61,17 +61,17 @@ public class Auto_45 extends LinearOpMode {
     }
 
     public void turn(int deg) {
-        int idk = deg / 4;
+        deg = deg / 4;
         motorRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         motorLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         motorRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         motorRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        if (idk < 0) {
-            motorLeft.setTargetPosition((idk / 32 * 1440));
-            motorRight.setTargetPosition(-(idk / 32 * 1440));
-        } else if (idk > 0) {
-            motorLeft.setTargetPosition((-idk / 32 * 1440));
-            motorRight.setTargetPosition((idk / 32 * 1440));
+        if (deg < 0) {
+            motorLeft.setTargetPosition((deg / 32 * 1440));
+            motorRight.setTargetPosition(-(deg / 32 * 1440));
+        } else if (deg > 0) {
+            motorLeft.setTargetPosition((-deg / 32 * 1440));
+            motorRight.setTargetPosition((deg / 32 * 1440));
         } else {
 
         }
