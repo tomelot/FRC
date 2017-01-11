@@ -36,6 +36,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 /**
@@ -66,7 +67,6 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  */
 
 @Autonomous(name="Pushbot: Auto Drive By Encoder", group="Pushbot")
-@Disabled
 public class PushbotAutoDriveByEncoder_Linear extends LinearOpMode {
 
     /* Declare OpMode members. */
@@ -80,7 +80,12 @@ public class PushbotAutoDriveByEncoder_Linear extends LinearOpMode {
                                                       (WHEEL_DIAMETER_INCHES * 3.1415);
     static final double     DRIVE_SPEED             = 0.6;
     static final double     TURN_SPEED              = 0.5;
-
+    private DcMotor motorLeft;
+    private DcMotor motorRight;
+    private  DcMotor MotorWheelRight;
+    private  DcMotor MotorWheelLeft;
+    private Servo IntoWheels;
+    double degcm;
     @Override
     public void runOpMode() {
 
@@ -88,11 +93,15 @@ public class PushbotAutoDriveByEncoder_Linear extends LinearOpMode {
          * Initialize the drive system variables.
          * The init() method of the hardware class does all the work here
          */
-        robot.init(hardwareMap);
-
-        // Send telemetry message to signify robot waiting;
-        telemetry.addData("Status", "Resetting Encoders");    //
-        telemetry.update();
+        motorLeft = hardwareMap.dcMotor.get("motorleft");
+        motorRight = hardwareMap.dcMotor.get("motorright");
+        motorRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        motorLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        MotorWheelRight = hardwareMap.dcMotor.get("motorwheelright");
+        MotorWheelLeft = hardwareMap.dcMotor.get("motorwheelleft");
+        IntoWheels = hardwareMap.servo.get("intowheels");
+        motorLeft.setDirection(DcMotor.Direction.REVERSE);
+        IntoWheels.setPosition(0.8);
 
         robot.leftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         robot.rightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
