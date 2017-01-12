@@ -15,6 +15,7 @@ public class margalitt_ori extends LinearOpMode {
         private DcMotor MotorWheelRight;
         private DcMotor MotorWheelLeft;
         private Servo IntoWheels;
+        private  DcMotor esuf;
         long start_time;
         long time_check1 = 0;
         boolean checkshoot = false;
@@ -31,6 +32,7 @@ public class margalitt_ori extends LinearOpMode {
             MotorWheelRight = hardwareMap.dcMotor.get("motorwheelright");
             MotorWheelLeft = hardwareMap.dcMotor.get("motorwheelleft");
             IntoWheels = hardwareMap.servo.get("intowheels");
+            esuf=hardwareMap.dcMotor.get("esuf");
             motorLeft.setDirection(DcMotor.Direction.REVERSE);
             IntoWheels.setPosition(0.8);
             waitForStart();
@@ -41,18 +43,28 @@ public class margalitt_ori extends LinearOpMode {
                 shootpowerhigh();
                 shootpowerlow();
                 shoot();
-
+                esuf();
             }
 
         }
-
+    public void esuf(){
+        if(gamepad2.left_bumper==true){
+            esuf.setPower(1);
+        }
+        if(gamepad2.right_bumper==true){
+            esuf.setPower(-1);
+        }
+        if (gamepad2.b==true){
+            esuf.setPower(0);
+        }
+    }
         public void drive() {
             motorLeft.setPower(-(gamepad1.left_stick_y - gamepad1.right_stick_x));
             motorRight.setPower(-(gamepad1.left_stick_y + gamepad1.right_stick_x));
         }
 
         public void shoot() {
-            if (gamepad1.a == true) {
+            if (gamepad2.a == true) {
                 if (checkshoot == false) {
                     checkshoot = true;
                     time_check1 = start_time + 2000;

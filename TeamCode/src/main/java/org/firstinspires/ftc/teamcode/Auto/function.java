@@ -3,7 +3,10 @@ package org.firstinspires.ftc.teamcode.Auto;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.util.ElapsedTime;
+
 import android.content.Context;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -15,57 +18,39 @@ import android.hardware.SensorManager;
  * Created by Le Nayad on 12/25/2016.
  */
 
-@Autonomous(name = "Auto_1")
-public class Auto_45 extends LinearOpMode {
-    private DcMotor motorLeft;
-    private DcMotor motorRight;
-    private DcMotor MotorWheelRight;
-    private DcMotor MotorWheelLeft;
-    private Servo IntoWheels;
-    double degcm;
+public class function   {
+    public DcMotor motorLeft;
+    public DcMotor motorRight;
+    public DcMotor MotorWheelRight;
+    public DcMotor MotorWheelLeft;
+    public DcMotor esuf;
+    public Servo IntoWheels;
+    HardwareMap hwMap = null;
+    private ElapsedTime period  = new ElapsedTime();
 
-    @Override
-
-    public void runOpMode() throws InterruptedException {
-        motorLeft = hardwareMap.dcMotor.get("motorleft");
-        motorRight = hardwareMap.dcMotor.get("motorright");
+    public void in() {
+        motorLeft = hwMap.dcMotor.get("motorleft");
+        motorRight = hwMap.dcMotor.get("motorright");
+        esuf = hwMap.dcMotor.get("esuf");
         motorRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         motorLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        MotorWheelRight = hardwareMap.dcMotor.get("motorwheelright");
-        MotorWheelLeft = hardwareMap.dcMotor.get("motorwheelleft");
-        IntoWheels = hardwareMap.servo.get("intowheels");
+        MotorWheelRight = hwMap.dcMotor.get("motorwheelright");
+        MotorWheelLeft = hwMap.dcMotor.get("motorwheelleft");
+        IntoWheels = hwMap.servo.get("intowheels");
         motorLeft.setDirection(DcMotor.Direction.REVERSE);
         IntoWheels.setPosition(0.8);
-        commit();
-    }
-
-    public void Auto1() {
-        drive(155, 1);
-        drive(20, -1);
-        turn(130);
-        drive(500, 1);
-    }
-
-    public void commit() {
-        waitForStart();
-        telemetry.addData("encoder", motorLeft.getCurrentPosition());
-        telemetry.update();
-        //shoot(2, 1);
-//        turn(90);
-        turn(90);
-        //drive(100,1);
     }
 
     public boolean shoot(int balls, double speed) {
+        esuf.setPower(1);
         MotorWheelLeft.setPower(speed);
         MotorWheelRight.setPower(speed);
-        sleep(3000);
+        waitForTick(3000*balls);
         IntoWheels.setPosition(0.2);
-        sleep(1500 * balls);
-        IntoWheels.setPosition(0.8);
+        waitForTick(1500*balls);
         MotorWheelLeft.setPower(0);
         MotorWheelRight.setPower(0);
-        MotorWheelRight.setPower(0);
+        esuf.setPower(0);
         return true;
     }
 
@@ -78,15 +63,11 @@ public class Auto_45 extends LinearOpMode {
             while (-motorLeft.getCurrentPosition() < (cm / 32 * 1440 + value) * FOB && -motorRight.getCurrentPosition() < (cm / 32 * 1440 + value2) * FOB) {
                 motorLeft.setPower(FOB);
                 motorRight.setPower(FOB);
-                telemetry.addData("encoder", -motorRight.getCurrentPosition());
-                telemetry.update();
             }
         } else {
             while (-motorLeft.getCurrentPosition() > (cm / 32 * 1440 + value) * FOB && -motorRight.getCurrentPosition() > (cm / 32 * 1440 + value2) * FOB) {
                 motorLeft.setPower(FOB);
                 motorRight.setPower(FOB);
-                telemetry.addData("encoder", -motorRight.getCurrentPosition());
-                telemetry.update();
             }
         }
         motorLeft.setPower(0);
@@ -101,20 +82,14 @@ public class Auto_45 extends LinearOpMode {
         float turnDistance = turnDeg*1440 /32;
         float finalValueLeft = -(turnDistance + getCurrentPosition(motorLeft));
         float finalValueRight = turnDistance + getCurrentPosition(motorRight);
-        telemetry.addData("tom",turnDistance);
-        telemetry.update();
-//        if (turnDeg < 0) {
 
             while (getCurrentPosition(motorRight) < finalValueRight&& getCurrentPosition(motorLeft)>finalValueLeft) {
                 motorRight.setPower(1);
                 motorLeft.setPower(-1);
-                telemetry.addData("InOrOut","In");
-                telemetry.update();
             }
-        telemetry.addData("InOrOut","Out");
-        telemetry.update();
             motorLeft.setPower(0);
             motorRight.setPower(0);
+        //if (turnDeg < 0) {
 //       }
 //        else {
 //            while (motorLeft.getCurrentPosition() > turnDistance + finalValueLeft && -motorRight.getCurrentPosition() < turnDistance + finalValueRight) {
@@ -127,5 +102,21 @@ public class Auto_45 extends LinearOpMode {
     }
     public int getCurrentPosition(DcMotor motor){
         return -motor.getCurrentPosition();
+    }
+    public void waitForTick(long periodMs) {
+
+        long  remaining = periodMs - (long)period.milliseconds();
+
+        // sleep for the remaining portion of the regular cycle period.
+        if (remaining > 0) {
+            try {
+                Thread.sleep(remaining);
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
+        }
+
+        // Reset the cycle clock for the next pass.
+        period.reset();
     }
 }

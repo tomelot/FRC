@@ -15,6 +15,7 @@ public class royi_segev extends LinearOpMode {
     private DcMotor MotorWheelRight;
     private DcMotor MotorWheelLeft;
     private Servo IntoWheels;
+    private  DcMotor esuf;
     long start_time;
     long time_check1 = 0;
     boolean checkshoot = false;
@@ -28,6 +29,7 @@ public class royi_segev extends LinearOpMode {
         MotorWheelRight = hardwareMap.dcMotor.get("motorwheelright");
         MotorWheelLeft = hardwareMap.dcMotor.get("motorwheelleft");
         IntoWheels = hardwareMap.servo.get("intowheels");
+        esuf=hardwareMap.dcMotor.get("esuf");
         motorLeft.setDirection(DcMotor.Direction.REVERSE);
         IntoWheels.setPosition(0.8);
         waitForStart();
@@ -38,12 +40,23 @@ public class royi_segev extends LinearOpMode {
             shootpowerhigh();
             shootpowerlow();
             shoot();
+            esuf();
             telemetry.addData("speed", MotorWheelLeft.getCurrentPosition());
             telemetry.update();
         }
 
     }
-
+    public void esuf(){
+        if(gamepad2.left_bumper==true){
+            esuf.setPower(1);
+        }
+        if(gamepad2.right_bumper==true){
+            esuf.setPower(-1);
+        }
+        if (gamepad2.b==true){
+            esuf.setPower(0);
+        }
+    }
     public void drive() {
         double i = 1;
         if (gamepad1.left_stick_y != 0 && gamepad1.right_stick_x != 0) {
